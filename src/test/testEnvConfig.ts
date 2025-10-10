@@ -1,5 +1,5 @@
 import React from 'react';
-import { CellLocation, Highlight, TextLabels } from '../core';
+import { CellLocation, Highlight, Row, TextLabels } from "../core";
 
 /**
  * All of the properties that cypress tests files can read
@@ -240,5 +240,12 @@ export interface TestConfig {
 
     fillViewport?: boolean;
     withDivComponentStyles: React.CSSProperties;
+    onError?: (context: {error:Error, errorInfo:React.ErrorInfo}) => void | React.ReactNode | undefined;
+    rowsOverride?: Row[]
+}
 
+export const errorHandler = {
+    ...config,
+    onError: (context: {error:Error, errorInfo:React.ErrorInfo}): string => `This could be custom: ${context?.error?.message}`,
+    rowsOverride: [{ rowId: 1, cells: [{type:'text'}]  }], //it causes grid to throw missing 'text' property
 }

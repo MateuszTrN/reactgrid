@@ -6,13 +6,13 @@ import { useReactGridState } from './StateProvider';
 import { isBrowserFirefox } from '../Functions/firefox';
 
 export const GridRenderer: React.FC<GridRendererProps> = ({ eventHandlers, children }) => {
-    const { cellMatrix, props } = useReactGridState();
+    const { cellMatrix, props, onError } = useReactGridState();
     const sharedStyles = {
         width: props?.enableFullWidthHeader ? '100%' : cellMatrix.width,
         height: cellMatrix.height,
     };
     return (
-        <ErrorBoundary>
+        <ErrorBoundary onError={onError}>
             <div
                 className="reactgrid"
                 style={{

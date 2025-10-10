@@ -51,7 +51,9 @@ export function getDerivedStateFromProps(
     }
   
     state = stateDeriverWithProps(state)(appendStateFields);
-  
+
+    state = stateDeriverWithProps(state)(onError);
+
     return state;
 }
 
@@ -82,6 +84,11 @@ function appendStateFields(
       enableColumnSelection: !!props.enableColumnSelection,
       enableRowSelection: !!props.enableRowSelection,
     };
+  }
+
+  function onError(props: ReactGridProps,
+                   state: State): State {
+    return {...state, onError: props.onError};
   }
   
 

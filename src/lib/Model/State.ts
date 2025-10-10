@@ -1,4 +1,4 @@
-import { CellTemplates, Cell, ReactGridProps, Compatible, Highlight, CellChange, Id, SelectionMode } from './PublicModel';
+import { CellTemplates, Cell, ReactGridProps, Compatible, Highlight, CellChange, Id, SelectionMode, GridErrorEventHandler } from './PublicModel';
 import { isBrowserIE } from '../Functions/internetExplorer';
 import { isBrowserEdge } from '../Functions/microsoftEdge';
 import { DefaultBehavior } from '../Behaviors/DefaultBehavior';
@@ -64,6 +64,7 @@ export interface State<TCellMatrix extends CellMatrix = CellMatrix, TBehavior ex
     readonly copyRange?: Range;
     readonly rightStickyColumns: number | undefined;
     readonly bottomStickyRows: number | undefined;
+    readonly onError?: GridErrorEventHandler;
 }
 
 export const defaultStateFields = {

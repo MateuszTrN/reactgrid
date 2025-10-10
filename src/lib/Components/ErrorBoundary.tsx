@@ -1,4 +1,5 @@
-import React, { Component, ErrorInfo } from 'react';
+import React, { Component, ErrorInfo } from "react";
+import { GridErrorEventHandler } from "../Model/PublicModel";
 
 interface ErrorBoundaryState {
     error?: Error;
@@ -6,7 +7,7 @@ interface ErrorBoundaryState {
     hasError: boolean;
 }
 
-export class ErrorBoundary extends Component<Record<string, unknown>, ErrorBoundaryState> {
+export class ErrorBoundary extends Component<Record<string, unknown> & { onError?: GridErrorEventHandler}, ErrorBoundaryState> {
 
     state: ErrorBoundaryState = {
         hasError: false,
@@ -22,15 +23,20 @@ export class ErrorBoundary extends Component<Record<string, unknown>, ErrorBound
 
     render(): React.ReactNode {
         const { hasError, errorInfo, error } = this.state;
-
         if (hasError) {
-            return (<>
-                <h1>{error?.message}</h1> <br /><br />
-                <details>
-                    {error?.stack}
-                    {errorInfo?.componentStack}
-                </details>
-            </>)
+            const errorHandlerResult = this.props.onError?.({ error, errorInfo } as { error: Error; errorInfo: ErrorInfo });
+            return errorHandlerResult ? (
+              errorHandlerResult
+            ) : (
+              <>
+                  <h1>{error?.message}</h1> <br />
+                  <br />
+                  <details>
+                      {error?.stack}
+                      {errorInfo?.componentStack}
+                  </details>
+              </>
+            );
         } else {
             return this.props.children;
         }

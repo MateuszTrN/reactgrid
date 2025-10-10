@@ -11,6 +11,7 @@ import {
 } from './../CellTemplates';
 
 import { Range } from './Range';
+import { ErrorInfo, ReactNode } from "react";
 
 /**
  * `Range` is a class. This class represents a rectangular area with a width, height, upper-left position, and lower-right position.
@@ -26,6 +27,9 @@ export type SelectionMode =
     | 'row'
     | 'column'
     | 'range'
+
+
+export type GridErrorEventHandler = ({error, errorInfo}:{error: Error, errorInfo: ErrorInfo}) => ReactNode | undefined | void | null;
 
 /**
  * `ReactGrid`'s component props
@@ -224,6 +228,8 @@ export interface ReactGridProps {
      * @returns {boolean} Return `true` to allow droping column at specific column
      */
     readonly canReorderRows?: (targetRowId: Id, rowIds: Id[], dropPosition: DropPosition) => boolean;
+
+    readonly onError?: GridErrorEventHandler
 }
 
 

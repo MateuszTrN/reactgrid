@@ -546,7 +546,7 @@ export const TestGrid: React.FC<TestGridProps> = (props) => {
               <button onClick={handleClearSelections}>Clear Selections</button>
               {render && <Component
                   ref={reactGridRef}
-                  rows={rows}
+                  rows={config.rowsOverride ?? rows}
                   columns={columns}
                   initialFocusLocation={config.initialFocusLocation}
                   enableColumnResizeOnAllHeaders={config.enableColumnResizeOnAllHeaders}
@@ -581,6 +581,7 @@ export const TestGrid: React.FC<TestGridProps> = (props) => {
                   onSelectionChanged={handleSelectionChanged}
                   onSelectionChanging={handleSelectionChanging}
                   moveRightOnEnter={config.moveRightOnEnter}
+                  onError={config.onError}
               />}
               {config.additionalContent &&
                   <div style={{ height: `${config.rgViewportHeight}px`, backgroundColor: '#fafff3' }}>
@@ -672,6 +673,9 @@ export const TestGridOptionsSelect: React.FC = () => {
         </option>
         <option value="/disableVirtualScrolling">
           Disable virtual scrolling
+        </option>
+        <option value="/onErrorHandler">
+          onErrorHandler
         </option>
       </select>
     </form>
